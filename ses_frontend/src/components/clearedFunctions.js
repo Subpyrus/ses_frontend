@@ -20,16 +20,24 @@ export default class Cleared extends Component {
 
      parameterizedRoot() {
           var n = document.getElementById("nroot").value;
-          var x = document.getElementById("result").value;
+          var x = document.getElementById("number").value;
 
-          var ng = n % 2;
+          var result = this.nthroot(x,n);
+          
+
+          document.getElementById("result").innerText = "Result: " + result;
+          
+     }
+
+     nthroot(x, n) {
+          let ng = n % 2;
           if((ng == 1) || x<0)
                x = -x;
           var r = Math.pow(x, 1 / n);
           n = Math.pow(r, n);
-  
+          
           if(Math.abs(x - n) < 1 && (x > 0 === n > 0))
-              document.getElementById("result").innerText = "Result: " + ng ? -r : r; 
+               return ng ? -r : r; 
      }
 
      render() {
