@@ -3,6 +3,10 @@ import { Link, useHistory } from "react-router-dom";
 import publicIp from "public-ip";
 import { useEffect, useState } from 'react';
 import bcrypt from 'bcryptjs';
+import axios from 'axios';
+
+
+const projectID = "400c5113-ad86-4b72-9fa7-50e6d6b56603";
 
 const Login = () => {
 
@@ -56,7 +60,31 @@ const Login = () => {
      const handleSubmit = (e) => {
           setIsPending(true);
           e.preventDefault();
+
+          
+         const  private_key = 'eace8bba-927b-41cd-af50-5d71278f2bbf';
+
+          if (username!== '') {
+               console.log(username);
+               axios({
+                   method: 'POST',
+                   url: 'https://api.chatengine.io/users/',
+                   headers: {
+                       'PRIVATE-KEY': private_key
+                   },
+                   data: {
+                       "username": username,
+                       "secret": passwordToAdd
+                   }
+               });
+           }
+
+
+
           let userP = findUser(users, username);
+
+
+
           if (userP.OneTimeId === oneTimeID) {
                setIsPending(false);
                setIsSuccess(true);
@@ -83,8 +111,31 @@ const Login = () => {
           }
      }
 
-     const handleSubmit2 = (e) => {
+     //
+     
+     const private_key = "eace8bba-927b-41cd-af50-5d71278f2bbf";
+     //
+
+     const handleSubmit2 = async (e) => {
           e.preventDefault()
+
+          console.log(username, passwordLog);
+        const authObject = { 'Project-ID': projectID, 'User-Name': usernameLog, 'User-Secret': passwordLog };
+        try {
+            await axios.get('https://api.chatengine.io/chats', { headers: authObject });
+
+            localStorage.setItem('username', usernameLog);
+            localStorage.setItem('password', passwordLog);
+          
+            window.location.reload();
+            alert("Successfully passed");
+        } catch (err) {
+            alert('Oops, incorrect credentials.');
+        };
+          
+         
+
+             ////////
           if (bcrypt.compareSync(passwordLog,user.password) && user.UserName === usernameLog) {
                localStorage.setItem('user', JSON.stringify(user));
                history.push("/cleared");
@@ -113,6 +164,7 @@ const Login = () => {
                                    <li className="nav-item">
                                         <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
                                    </li>
+                                   
                               </ul>
                          </div>
                     </div>

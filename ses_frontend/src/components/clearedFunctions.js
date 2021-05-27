@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useEffect, useState } from 'react';
 
+
 const Cleared = () => {
 
      const [result, setResult] = useState("");
@@ -71,6 +72,9 @@ const Cleared = () => {
                     </div>
 
                     <button onClick={clearSession} className="btn btn-primary btn-block my-3">Clear Session</button>
+
+                    <button>  <a href="http://localhost:3000/chat"  className="btn btn-primary btn-block my-3">Live Chat</a></button>
+               
                </div>
 
           );

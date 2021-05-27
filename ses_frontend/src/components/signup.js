@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const SignUp = () => {
 
@@ -8,8 +9,10 @@ const SignUp = () => {
     const [firstName, setfirstName] = useState("");
     const [lastName, setlastName] = useState("");
     const [username, setuserName] = useState("");
+    const [password, setPassword] = useState("");
     const [clearancelevel, setClearance] = useState("")
     const history = useHistory();
+    
 
     useEffect(() => {
         fetch('https://ses2021.herokuapp.com/api/v1/ClearanceLevel')
@@ -22,6 +25,9 @@ const SignUp = () => {
             })   
     }, [])
 
+    
+
+    
     const makeid = (length) => {
         var result           = [];
         var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -49,6 +55,31 @@ const SignUp = () => {
             history.push("/");
         })
 
+        var data = { username: username, secret: password };
+
+        var config = {
+        method: "post",
+        url: "https://api.chatengine.io/users/",
+        headers: {
+        "PRIVATE-KEY": "eace8bba-927b-41cd-af50-5d71278f2bbf",
+        },
+        data: data,
+        };
+        
+        axios(config)
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+
+
+        localStorage.setItem("userid", response.data.id);
+        window.location.replace("/signIn");
+        console.log(response.data.id);
+
+        })
+        .catch(function (error) {
+            console.log(error);
+        });   
+
     
     }
 
@@ -64,6 +95,7 @@ const SignUp = () => {
                             <li className="nav-item">
                                 <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
                             </li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -105,6 +137,9 @@ const SignUp = () => {
 
 
     );
+
+
+
 }
 
 export default SignUp;
