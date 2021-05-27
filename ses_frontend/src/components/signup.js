@@ -12,7 +12,7 @@ const SignUp = () => {
     const [password, setPassword] = useState("");
     const [clearancelevel, setClearance] = useState("")
     const history = useHistory();
-    const privateKey = "eace8bba-927b-41cd-af50-5d71278f2bbf";
+    
 
     useEffect(() => {
         fetch('https://ses2021.herokuapp.com/api/v1/ClearanceLevel')
@@ -25,15 +25,7 @@ const SignUp = () => {
             })   
     }, [])
 
-    var data1 = { username: username };
-    var config1 = {
-    method: "patch",
-    url: "https://api.chatengine.io/users/" + username + "/",
-    headers: {
-      "PRIVATE-KEY": "eace8bba-927b-41cd-af50-5d71278f2bbf",
-    },
-    data: data1,
-  };
+    
 
     
     const makeid = (length) => {
@@ -78,10 +70,10 @@ const SignUp = () => {
         .then(function (response) {
             console.log(JSON.stringify(response.data));
 
-// window.location.replace("http://localhost:3000/signIn");
-localStorage.setItem("userid", response.data.id);
-window.location.replace("/signIn");
-console.log(response.data.id);
+
+        localStorage.setItem("userid", response.data.id);
+        window.location.replace("/signIn");
+        console.log(response.data.id);
 
         })
         .catch(function (error) {
@@ -103,9 +95,7 @@ console.log(response.data.id);
                             <li className="nav-item">
                                 <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to={"/chat"}>Messenger</Link>
-                            </li>
+                            
                         </ul>
                     </div>
                 </div>

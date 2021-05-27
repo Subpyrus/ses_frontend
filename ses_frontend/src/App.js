@@ -17,8 +17,9 @@ function App() {
             <Route exact path='/' component={Login} />
             <Route path="/sign-in" component={Login} />
             <Route path="/sign-up" component={SignUp} />
-            <Route path="/cleared" component={Cleared}/>
             <Route path="/chat" component={DirectChatPage}/>
+            <Route path="/cleared" component={Cleared}/>
+            
           </Switch>
         </div>
       </div>
